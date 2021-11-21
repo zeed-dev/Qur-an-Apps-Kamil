@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kamil_apps/common/constants.dart';
 import 'package:kamil_apps/persentation/pages/al_quran_page.dart';
 import 'package:kamil_apps/persentation/pages/home_page.dart';
 import 'package:kamil_apps/persentation/pages/profile_page.dart';
 import 'package:kamil_apps/persentation/pages/shalat_page.dart';
 import 'package:kamil_apps/persentation/providers/page_notifier.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:kamil_apps/persentation/widgets/bottom_Navbar_widget.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,36 +15,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Widget _buildBottomNavBar(PageNotifier pageNotifier) {
-    return BottomNavigationBar(
-      selectedItemColor: KGreen,
-      unselectedItemColor: kGreySecondary,
-      currentIndex: pageNotifier.currentIndex,
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) {
-        pageNotifier.currentIndex = index;
-      },
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_filled),
-          label: "Home",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(MdiIcons.mosque),
-          label: "Shalat",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(MdiIcons.bookPlusOutline),
-          label: "Al-Qur'an",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          label: "Profile",
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     PageNotifier _pageNotifier = Provider.of<PageNotifier>(context);
@@ -59,7 +28,9 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       body: _screen[_pageNotifier.currentIndex],
-      bottomNavigationBar: _buildBottomNavBar(_pageNotifier),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        pageNotifier: _pageNotifier,
+      ),
     );
   }
 }
